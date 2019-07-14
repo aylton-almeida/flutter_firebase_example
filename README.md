@@ -6,6 +6,9 @@ App exemplo desenvolvido utilizando flutter e firebase
 * Flutter
 * Firebase
 
+## Como usar
+Adicione o arquivo 'google-services.json' ao diretorio 'android/app/'
+
 ## Autor
 
 * Aylton Almeida
