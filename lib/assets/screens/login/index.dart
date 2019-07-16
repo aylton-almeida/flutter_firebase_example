@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../utils/globals.dart' as globals;
 
 //Cria um widget que pode ter seu estado alterado apos compilacao
 class LoginPage extends StatefulWidget {
@@ -22,8 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   //Variaveis para controle dos textField
   final TextEditingController _controladorEmail = TextEditingController();
   final TextEditingController _controladorSenha = TextEditingController();
-  //Variaveis de usuario logado
-  Object _loggedUser;
 
   //Button pressed
   _handleButtonPressed() async {
@@ -53,12 +52,11 @@ class _LoginPageState extends State<LoginPage> {
       );
     } catch (ignored) {}
     if (_user != null) {
-      setState(() {
-        _loggedUser = {
-          'email': _user.email,
-          'code': _user.uid,
-        };
-      });
+      globals.loggedUser = {
+        'email': _user.email,
+        'code': _user.uid,
+        'islogged': true,
+      };
       _isLoggedIn = true;
     }
 

@@ -1,3 +1,4 @@
+import 'package:app_beleza/assets/screens/maps/index.dart';
 import 'package:flutter/material.dart';
 import 'assets/screens/login/index.dart';
 import 'assets/screens/logado/index.dart';
@@ -6,7 +7,8 @@ class Routes {
   //Map contendo rotas do app
   var routes = <String, WidgetBuilder>{
     //'/LoginPage': (BuildContext context) => LoginPage(),
-    '/LogadoPage': (BuildContext context) => LogadoPage()
+    '/LogadoPage': (BuildContext context) => LogadoPage(),
+    '/MapsPage': (BuildContext context) => MapsPage(),
   };
 
   final appTheme = ThemeData(
