@@ -11,6 +11,9 @@
         android:label="app_beleza"
         android:icon="@mipmap/ic_launcher">
 
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCkvW-Bu9XBWVBNCdYn9U_QrR7ysPUMO0U"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
