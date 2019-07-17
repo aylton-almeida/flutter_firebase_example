@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoder/geocoder.dart';
 
 class MapsPage extends StatefulWidget {
@@ -25,12 +25,17 @@ class _MapsPageState extends State<MapsPage> {
   final LatLng _center = const LatLng(-19.9219262, -43.9482831);
 
   //Set de marcador
-  final Set<Marker> _markers = Set();
+  final Set<Marker> _markers = <Marker>{
+    Marker(
+        markerId: MarkerId('Escritorio'),
+        position: LatLng(-19.9219262, -43.9482831)),
+  };
 
   //Codifica endereco
   void _codeAdress() async {
-    var addresses =
-        await Geocoder.local.findAddressesFromQuery(_searchController.text);
+    List<Address> addresses =
+        await Geocoder.google(DotEnv().env['GOOGLE_MAPS_API'])
+            .findAddressesFromQuery('1600 Amphiteatre Parkway, Mountain View');
     var first = addresses.first;
     Coordinates _coo = first.coordinates;
     LatLng _newPosition = LatLng(_coo.latitude, _coo.longitude);
@@ -100,11 +105,10 @@ class _MapsPageState extends State<MapsPage> {
         ],
       ),
       body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(target: _center, zoom: 16.0),
-          markers: <Marker>{
-            Marker(markerId: MarkerId('Escritorio'), position: _center),
-          }),
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(target: _center, zoom: 16.0),
+        markers: _markers,
+      ),
     );
   }
 }
