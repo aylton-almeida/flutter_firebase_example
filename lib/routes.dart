@@ -12,13 +12,15 @@ class Routes {
   };
 
   final appTheme = ThemeData(
-    primaryColor: Colors.blue[900],
-    accentColor: Colors.blue[300],
-    cursorColor: Colors.blue[300],
-    buttonColor: Colors.blue[900],
-    textSelectionColor: Colors.blue[300],
-    textSelectionHandleColor: Colors.blue[300],
-  );
+      primaryColor: Colors.blue[900],
+      accentColor: Colors.blue[300],
+      cursorColor: Colors.blue[300],
+      buttonColor: Colors.blue[900],
+      textSelectionColor: Colors.blue[300],
+      textSelectionHandleColor: Colors.blue[300],
+      iconTheme: IconThemeData(
+        color: Colors.white,
+      ));
 
   Routes() {
     runApp(new MaterialApp(

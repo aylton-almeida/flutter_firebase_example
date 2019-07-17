@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   //Declarar chave do form
   final _formKey = GlobalKey<FormState>();
   //Declarar chave do scaffold
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   //Variaveis para controle dos textField
   final TextEditingController _controladorEmail = TextEditingController();
   final TextEditingController _controladorSenha = TextEditingController();
