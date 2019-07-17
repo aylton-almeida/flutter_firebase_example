@@ -73,3 +73,6 @@
 
 # Arquivo firebase 
 google-services.json
+
+#Arquivo enviroment
+.env

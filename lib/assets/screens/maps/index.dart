@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:geocoder/geocoder.dart';
 
 class MapsPage extends StatefulWidget {
   const MapsPage({Key key}) : super(key: key);
@@ -21,6 +23,23 @@ class _MapsPageState extends State<MapsPage> {
 
   //Define posicao inicial do mapa
   final LatLng _center = const LatLng(-19.9219262, -43.9482831);
+
+  //Set de marcador
+  final Set<Marker> _markers = Set();
+
+  //Codifica endereco
+  void _codeAdress() async {
+    var addresses =
+        await Geocoder.local.findAddressesFromQuery(_searchController.text);
+    var first = addresses.first;
+    Coordinates _coo = first.coordinates;
+    LatLng _newPosition = LatLng(_coo.latitude, _coo.longitude);
+    _markers.clear();
+    _markers.add(Marker(
+      markerId: MarkerId(first.locality),
+      position: _newPosition,
+    ));
+  }
 
   //Define controlador do mapa
   void _onMapCreated(GoogleMapController controller) {
@@ -48,9 +67,13 @@ class _MapsPageState extends State<MapsPage> {
               hintText: 'Procure um local...',
               hintStyle: TextStyle(color: Colors.white)),
           style: TextStyle(color: Colors.white),
+          autofocus: true,
         );
       } else {
         _showSnackBar(value: 'Você procurou: ${_searchController.text}');
+        //Retirar foco do input
+        FocusScope.of(context).requestFocus(FocusNode());
+        _codeAdress();
         _searchIcon = Icon(Icons.search);
         _appBarTitle = Text('Maps');
         _searchController.clear();
@@ -77,9 +100,11 @@ class _MapsPageState extends State<MapsPage> {
         ],
       ),
       body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(target: _center, zoom: 11.0),
-      ),
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(target: _center, zoom: 16.0),
+          markers: <Marker>{
+            Marker(markerId: MarkerId('Escritorio'), position: _center),
+          }),
     );
   }
 }

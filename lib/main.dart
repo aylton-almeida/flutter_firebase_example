@@ -1,3 +1,7 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'Routes.dart';
 
-void main() => new Routes();
+Future main() async {
+  await DotEnv().load('.env');
+  Routes();
+}
