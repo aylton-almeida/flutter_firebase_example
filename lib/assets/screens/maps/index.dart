@@ -35,15 +35,19 @@ class _MapsPageState extends State<MapsPage> {
   void _codeAdress() async {
     List<Address> addresses =
         await Geocoder.google(DotEnv().env['GOOGLE_MAPS_API'])
-            .findAddressesFromQuery('1600 Amphiteatre Parkway, Mountain View');
+            .findAddressesFromQuery(_searchController.text);
     var first = addresses.first;
     Coordinates _coo = first.coordinates;
     LatLng _newPosition = LatLng(_coo.latitude, _coo.longitude);
-    _markers.clear();
-    _markers.add(Marker(
-      markerId: MarkerId(first.locality),
-      position: _newPosition,
-    ));
+    setState(() {
+      _markers.clear();
+      _markers.add(Marker(
+        markerId: MarkerId(first.addressLine),
+        position: _newPosition,
+      ));
+    });
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: _newPosition, zoom: 16.0)));
   }
 
   //Define controlador do mapa
@@ -75,10 +79,12 @@ class _MapsPageState extends State<MapsPage> {
           autofocus: true,
         );
       } else {
-        _showSnackBar(value: 'Você procurou: ${_searchController.text}');
+        if (_searchController.text.isNotEmpty) {
+          _showSnackBar(value: 'Você procurou: ${_searchController.text}');
+          _codeAdress();
+        }
         //Retirar foco do input
         FocusScope.of(context).requestFocus(FocusNode());
-        _codeAdress();
         _searchIcon = Icon(Icons.search);
         _appBarTitle = Text('Maps');
         _searchController.clear();
