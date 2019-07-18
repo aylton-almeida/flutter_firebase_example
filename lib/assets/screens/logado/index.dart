@@ -13,13 +13,6 @@ class _LogadoPageState extends State<LogadoPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-//Mostrar Snackbar
-  _showSnackBar({String value, Color color}) =>
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('$value'),
-        backgroundColor: color,
-      ));
-
   //Função de construcao do corpo da pagina, recuperando usuarios do banco
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
